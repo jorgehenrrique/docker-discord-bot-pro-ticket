@@ -2,6 +2,8 @@
 
 Repositório público com **Docker Compose** para desenvolvimento local e **Dockerfile** mínimo que referencia a imagem do bot publicada no [GitHub Container Registry](https://github.com/users/jorgehenrrique/packages/container/package/pro-ticket-bot). O uso da **imagem** do Pro Ticket está sujeito ao [EULA](EULA.md).
 
+A **versão do bot** alinhada com a imagem `ghcr.io/jorgehenrrique/pro-ticket-bot` está no ficheiro [**VERSION**](VERSION).
+
 ## Deploy com um clique (Railway)
 
 **Template oficial:**

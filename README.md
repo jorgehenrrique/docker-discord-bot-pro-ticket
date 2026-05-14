@@ -4,7 +4,8 @@ Repositório público com **Docker Compose** para desenvolvimento local e **Dock
 
 ## Deploy com um clique (Railway)
 
-**Template oficial:** [![Deploy Pro Ticket Discord Bot](https://railway.com/button.svg)](https://railway.com/deploy/pro-ticket-discord-bot)
+**Template oficial:**
+[![Deploy Pro Ticket Discord Bot](https://railway.com/button.svg)](https://railway.com/deploy/pro-ticket-discord-bot)
 
 Após o deploy, siga o fluxo de OAuth no Discord (redirect para o painel web) e use `/start` no servidor, como descrito na página do template.
 

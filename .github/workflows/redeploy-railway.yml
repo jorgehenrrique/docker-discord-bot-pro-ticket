@@ -1,0 +1,62 @@
+# Redeploy opcional do serviço Pro Ticket na Railway (puxa novo digest da imagem base no próximo build).
+#
+# Secrets obrigatórios (Settings → Secrets and variables → Actions):
+#   RAILWAY_TOKEN          — token de conta/workspace (Bearer), ver https://docs.railway.com/guides/public-api
+#   RAILWAY_SERVICE_ID     — Cmd/Ctrl+K no dashboard → Copy Service ID
+#   RAILWAY_ENVIRONMENT_ID — Cmd/Ctrl+K → Copy Environment ID
+#
+# Variável de repositório opcional (Settings → Variables → Actions):
+#   RAILWAY_SCHEDULED_REDEPLOY = true   — permite que o cron abaixo execute o redeploy automaticamente.
+#   Sem esta variável, apenas workflow_dispatch dispara o job (evita runs agendados acidentais).
+#
+# Se a mutação falhar (API evoluiu), grave um redeploy manual no dashboard e copie a mutation do separador Network,
+# ou use o GraphiQL: https://railway.com/graphiql
+
+name: Redeploy Railway (opcional)
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: "0 6 * * *"
+
+jobs:
+  redeploy:
+    runs-on: ubuntu-latest
+    if: github.event_name == 'workflow_dispatch' || vars.RAILWAY_SCHEDULED_REDEPLOY == 'true'
+    steps:
+      - name: Disparar serviceInstanceRedeploy na Railway
+        env:
+          RAILWAY_TOKEN: ${{ secrets.RAILWAY_TOKEN }}
+          RAILWAY_SERVICE_ID: ${{ secrets.RAILWAY_SERVICE_ID }}
+          RAILWAY_ENVIRONMENT_ID: ${{ secrets.RAILWAY_ENVIRONMENT_ID }}
+        run: |
+          set -euo pipefail
+          if [ -z "${RAILWAY_TOKEN:-}" ] || [ -z "${RAILWAY_SERVICE_ID:-}" ] || [ -z "${RAILWAY_ENVIRONMENT_ID:-}" ]; then
+            echo "::error::Configure os secrets RAILWAY_TOKEN, RAILWAY_SERVICE_ID e RAILWAY_ENVIRONMENT_ID neste repositório."
+            exit 1
+          fi
+
+          payload="$(jq -n \
+            --arg q 'mutation ($environmentId: String!, $serviceId: String!) { serviceInstanceRedeploy(environmentId: $environmentId, serviceId: $serviceId) }' \
+            --arg eid "$RAILWAY_ENVIRONMENT_ID" \
+            --arg sid "$RAILWAY_SERVICE_ID" \
+            '{query: $q, variables: {environmentId: $eid, serviceId: $sid}}')"
+
+          resp="$(curl -sS -X POST 'https://backboard.railway.com/graphql/v2' \
+            -H "Authorization: Bearer ${RAILWAY_TOKEN}" \
+            -H 'Content-Type: application/json' \
+            -d "$payload")"
+
+          if ! echo "$resp" | jq -e . >/dev/null 2>&1; then
+            echo "::error::Resposta não JSON da Railway:"
+            echo "$resp"
+            exit 1
+          fi
+
+          echo "$resp" | jq .
+
+          err_count="$(echo "$resp" | jq '(.errors // []) | length')"
+          if [ "$err_count" != "0" ]; then
+            echo "::error::A API Railway devolveu erros. Confirme IDs e a mutation em https://docs.railway.com/integrations/api/manage-deployments"
+            exit 1
+          fi

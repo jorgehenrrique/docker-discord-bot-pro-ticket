@@ -8,7 +8,7 @@ A **versão do bot** alinhada com a imagem `ghcr.io/jorgehenrrique/pro-ticket-bo
 
 **Template oficial:**
 
-[![Deploy Pro Ticket Discord Bot](https://railway.com/button.svg)](https://railway.com/deploy/pro-ticket-discord-bot)
+[![Deploy Pro Ticket Discord Bot](https://railway.com/button.svg)](https://railway.com/deploy/discord-ticket)
 
 Após o deploy, siga o fluxo de OAuth no Discord (redirect para o painel web) e use `/start` no servidor, como descrito na página do template.
 
@@ -82,7 +82,7 @@ Em **Settings → Networking**, gere domínio e defina o tráfego HTTP para a po
 - **Tickets:** abertura/fecho/finalização, painéis, servidores/tipos/tags, campos custom, convites, voz, transcripts, notificações, ratings mútuos, relatórios agendados, administração (`/ticketadm`, `/configt`, etc.).
 - **Outros:** verificação Steam, mensagens de boas-vindas, canais de voz dinâmicos (`/autovoice`), temporizador (`/timer`), métricas, mensagens em massa, comandos de bot/status.
 
-Lista detalhada de comandos slash e rotas: ver documentação no canal criado pelo bot ou na [página do template Railway](https://railway.com/deploy/pro-ticket-discord-bot).
+Lista detalhada de comandos slash e rotas: ver documentação no canal criado pelo bot ou na [página do template Railway](https://railway.com/deploy/discord-ticket).
 
 ## Licença
 

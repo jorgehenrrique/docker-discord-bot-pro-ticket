@@ -45,22 +45,17 @@ A Railway **não executa** o ficheiro `docker-compose.yml` como um único stack 
 
 ### Variáveis no serviço do bot
 
-| Variável                     | Obrigatória | Descrição                                                                                                                                                                 |
-| ---------------------------- | ----------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `BOT_TOKEN`                  | Sim         | Token do bot (Discord Developer Portal).                                                                                                                                  |
-| `GUILD_ID`                   | Sim         | ID do servidor Discord.                                                                                                                                                   |
-| `DISCORD_CLIENT_SECRET`      | Sim\*       | Client Secret OAuth2 (necessário para login no painel web).                                                                                                               |
-| `MONGO_URI`                  | Sim         | URI de ligação ao MongoDB. Use **referência** ao serviço MongoDB (`${{Mongo.MONGO_URL}}` ou o nome que o template expuser — o dashboard mostra o nome exato da variável). |
-| `MONGO_DB_TICKET`            | Sim         | Nome da base (ex.: `pro_ticket`).                                                                                                                                         |
-| `COLLECTION_SYSTEM_SETTINGS` | Sim         | Nome da coleção (ex.: `system_settings`).                                                                                                                                 |
-| `COLLECTION_VERIFIED_USERS`  | Sim         | Ex.: `verified_users`.                                                                                                                                                    |
-| `COLLECTION_TICKETS`         | Sim         | Ex.: `tickets`.                                                                                                                                                           |
-| `COLLECTION_TICKET_USERS`    | Sim         | Ex.: `ticket_users`.                                                                                                                                                      |
-| `BASE_URL`                   | Sim         | URL pública HTTPS do serviço (ex.: `https://<domínio>.up.railway.app`).                                                                                                   |
-| `PORT`                       | Recomendado | `8080` (deve coincidir com a porta exposta na **Networking**).                                                                                                            |
-| `NODE_ENV`                   | Recomendado | `production`.                                                                                                                                                             |
-| `SERVER_HOSTNAME`            | Opcional    | Útil em alguns cenários (ex.: domínio público sem `https://`).                                                                                                            |
-| `STEAM_API_KEY`              | Opcional    | Steam — avatares na verificação.                                                                                                                                          |
+| Variável                | Obrigatória | Descrição                                                                                                                                                                 |
+| ----------------------- | ----------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `BOT_TOKEN`             | Sim         | Token do bot (Discord Developer Portal).                                                                                                                                  |
+| `GUILD_ID`              | Sim         | ID do servidor Discord.                                                                                                                                                   |
+| `DISCORD_CLIENT_SECRET` | Sim\*       | Client Secret OAuth2 (necessário para login no painel web).                                                                                                               |
+| `MONGO_URI`             | Sim         | URI de ligação ao MongoDB. Use **referência** ao serviço MongoDB (`${{Mongo.MONGO_URL}}` ou o nome que o template expuser — o dashboard mostra o nome exato da variável). |
+| `BASE_URL`              | Sim         | URL pública HTTPS do serviço (ex.: `https://<domínio>.up.railway.app`).                                                                                                   |
+| `PORT`                  | Recomendado | `8080` (deve coincidir com a porta exposta na **Networking**).                                                                                                            |
+| `NODE_ENV`              | Recomendado | `production`.                                                                                                                                                             |
+| `SERVER_HOSTNAME`       | Opcional    | Útil em alguns cenários (ex.: domínio público sem `https://`).                                                                                                            |
+| `STEAM_API_KEY`         | Opcional    | Steam — avatares na verificação.                                                                                                                                          |
 
 \*Obrigatória para o fluxo OAuth do painel (`DISCORD_CLIENT_SECRET` validado no servidor ao iniciar login).
 

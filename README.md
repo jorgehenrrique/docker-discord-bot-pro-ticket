@@ -85,6 +85,22 @@ Dentro do canal do ticket: finalizar, assumir, sala de voz, manter aberto, tags 
 
 ![Controles do ticket no Discord](.github/images/discord-ticket-controls.png)
 
+#### Comandos dentro de um ticket aberto
+
+| Comando | Quem | Uso |
+| --- | --- | --- |
+| `/close` | Dono / Staff / Admin | Fecha o ticket atual (pode abrir fluxo de avaliação) |
+| `/finalize` | Staff / Admin | Posta mensagem de finalização; o usuário encerra ou continua |
+| `/ticketc invite` | Dono\* / Staff / Admin | Convida convidados (acesso ticket/voz/ambos, histórico, expiração) |
+| `/ticketc remove` | Dono / Staff / Admin | Remove convidados (todos ou específicos) |
+| `/ticketc list` | Dono / Staff / Admin | Lista convidados do ticket |
+| `/reputation positive` | Staff / Admin | Pontuação positiva no dono do ticket (motivo opcional) |
+| `/reputation negative` | Staff / Admin | Pontuação negativa no dono do ticket (motivo opcional) |
+| `/reputation view` | Staff / Admin | Perfil, comportamento e histórico de reputação do dono |
+| `/timer` | Staff / Admin | Prazo com contagem regressiva e alerta/menções automáticas |
+
+\*O dono só convida se a opção estiver habilitada nas configurações. Além dos slash commands, os **botões** no canal cobrem assumir, voz, tags, manter aberto, etc. Relacionado (fora do canal do ticket): `/open` — Staff/Admin abre ticket em nome de outro usuário.
+
 Também há automação de inatividade (aviso, auto-close, reabertura com limite e botão **Manter Aberto**), avaliações mútuas, transcripts HTML, blacklist, reputação e comportamento.
 Usuários que logarem no painel web podem ver o histórico de tickets abertos e fechados, avaliações, transcripts, etc, (conforme as configurações do bot que você definir).
 

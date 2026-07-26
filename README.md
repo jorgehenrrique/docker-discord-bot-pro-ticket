@@ -73,6 +73,8 @@ Em **Settings → Networking**, gere domínio e defina o tráfego HTTP para a po
 
 Bot Discord profissional de tickets com **painel web** embutido, multi-idioma (**pt-BR**, **en-US**, **es-ES**) e mais.
 
+Após configurar as variáveis e o bot estar **online** no Discord, use o comando **`/start`** para as configurações básicas iniciais (timezone, idioma, categoria de tickets, canal de transcrição, canal de anexos e cargo staff). Sem esse passo, o sistema de tickets ainda não fica pronto para uso.
+
 ### No Discord — abertura e atendimento
 
 Painel customizável (título, cor, imagem, tipos e servidores) com botão **Abrir Ticket**:
@@ -83,7 +85,8 @@ Dentro do canal do ticket: finalizar, assumir, sala de voz, manter aberto, tags 
 
 ![Controles do ticket no Discord](.github/images/discord-ticket-controls.png)
 
-Também há automação de inatividade (aviso, auto-close, reabertura com limite e botão **Manter Aberto**), avaliações mútuas, transcripts HTML, blacklist e reputação/comportamento.
+Também há automação de inatividade (aviso, auto-close, reabertura com limite e botão **Manter Aberto**), avaliações mútuas, transcripts HTML, blacklist, reputação e comportamento.
+Usuários que logarem no painel web podem ver o histórico de tickets abertos e fechados, avaliações, transcripts, etc, (conforme as configurações do bot que você definir).
 
 ### Tipos de ticket e cargos de staff
 
@@ -105,7 +108,6 @@ Tags categorizam o ticket e podem **trocar quem tem acesso** ao canal (texto e v
 
 - **Cargos do canal** na tag: ao aplicar a tag, os cargos configurados **substituem** os do tipo de ticket (e de tags anteriores com cargos). Níveis **Suporte** (ver/enviar/atender) e **Gerente** (suporte + gerenciar canal/mensagens).
 - Trocar de tag (ex.: de “Geral” para “URGENTE” ou “Escalado”) **remove o acesso** da equipe anterior e **concede** à nova.
-- Remover a tag **recalcula** as permissões (volta aos cargos do tipo / tags restantes).
 - **Cargo temporário** opcional no usuário ao aplicar a tag
 - Menções de cargos em spoiler para chamar equipes sem spam
 - Tags de sistema (`Primeiro Ticket`, `Reaberto`, `Aberto por Admin`, `Fechado Automaticamente`) + tags custom

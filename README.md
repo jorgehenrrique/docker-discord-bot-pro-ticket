@@ -22,7 +22,7 @@ Após o deploy, siga o fluxo de OAuth no Discord (redirect para o painel web) e 
    cp .env.example .env
    ```
 
-2. Edite `.env`: defina pelo menos `BOT_TOKEN`, `GUILD_ID`, `DISCORD_CLIENT_SECRET` e ajuste `BASE_URL` para `http://localhost:8080` (e `SERVER_HOSTNAME` para `localhost` se usar funcionalidades que dependam de hostname).
+2. Edite `.env`: defina pelo menos `BOT_TOKEN`, `GUILD_ID`, `DISCORD_CLIENT_SECRET` e ajuste `BASE_URL` para `http://localhost:8080` (e `SERVER_HOSTNAME` para `localhost` se usar funcionalidades que dependam de hostname). Para usar a IA, defina também `AI_MASTER_KEY` (qualquer string estável e secreta — ver tabela de variáveis abaixo).
 
 3. Suba MongoDB + bot (requer Docker Compose com suporte a `env_file` opcional; em versões antigas, o ficheiro `.env` tem de existir mesmo vazio):
 
@@ -52,12 +52,21 @@ A Railway **não executa** o ficheiro `docker-compose.yml` como um único stack 
 | `DISCORD_CLIENT_SECRET` | Sim\*       | Client Secret OAuth2 (necessário para login no painel web).                                                                                                               |
 | `MONGO_URI`             | Sim         | URI de ligação ao MongoDB. Use **referência** ao serviço MongoDB (`${{Mongo.MONGO_URL}}` ou o nome que o template expuser — o dashboard mostra o nome exato da variável). |
 | `BASE_URL`              | Sim         | URL pública HTTPS do serviço (ex.: `https://<domínio>.up.railway.app`).                                                                                                   |
+| `AI_MASTER_KEY`         | Sim\*\*     | Master key AES para criptografar as chaves de API da IA no MongoDB. No **template Railway** é gerada automaticamente; em deploy manual / local defina você mesmo.       |
 | `PORT`                  | Recomendado | `8080` (deve coincidir com a porta exposta na **Networking**).                                                                                                            |
 | `NODE_ENV`              | Recomendado | `production`.                                                                                                                                                             |
 | `SERVER_HOSTNAME`       | Opcional    | Útil em alguns cenários (ex.: domínio público sem `https://`).                                                                                                            |
 | `STEAM_API_KEY`         | Opcional    | Steam — avatares na verificação.                                                                                                                                          |
 
 \*Obrigatória para o fluxo OAuth do painel (`DISCORD_CLIENT_SECRET` validado no servidor ao iniciar login).
+
+\*\*`AI_MASTER_KEY` — no template oficial a Railway gera um segredo de 32 caracteres:
+
+```
+AI_MASTER_KEY="${{ secret(32, \"abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ\") }}"
+```
+
+No docker compose local (ou serviço Railway sem template), coloque uma string secreta estável no `.env`. **Não troque** a key depois de cadastrar chaves de API no painel: a decriptação falha e será preciso recadastrá-las. Sem esta env, o painel de IA não consegue guardar/usar chaves de provedor.
 
 ### OAuth2 — redirect do painel
 
@@ -77,13 +86,16 @@ Após configurar as variáveis e o bot estar **online** no Discord, use o comand
 
 ### IA e auto-atendimento (painel 2.0)
 
-Atendimento assistido por IA integrado ao fluxo de tickets e configurável no painel web:
+Atendimento assistido por IA integrado ao fluxo de tickets. A configuração completa (provedor, chave de API, base de conhecimento, voz, orçamento, etc.) fica no painel web (**Assistente IA**); no Discord use `/ai` para controles rápidos no ticket.
+
+Pré-requisito de ambiente: `AI_MASTER_KEY` (auto no template Railway; manual no local — ver variáveis acima).
 
 - **Base de conhecimento** e **memórias** por servidor — o bot responde com contexto do seu suporte
-- **Aprendizado** contínuo a partir de atendimentos e conteúdo que você aprova
+- **Aprendizado** contínuo a partir de atendimentos e conteúdo que você aprova (`/ai learn` ou reação no canal)
 - **Provedores** de modelo configuráveis e tratamento de **mídia** (imagens/anexos) nas conversas
-- **Tags automáticas** sugeridas/aplicadas conforme o assunto do ticket
-- Preferência de **idioma por usuário** nos tickets (além do idioma padrão do servidor)
+- **Tags automáticas** sugeridas/aplicadas conforme o assunto do ticket (`/ai tag`)
+- Assistência à staff: resumo, sugestão de resposta, redação com confirmação (`/ai summary` · `suggest` · `reply`)
+- Preferência de **idioma por usuário** nos tickets via `/language` (além do idioma padrão do servidor)
 
 > Capturas de ecrã da UI de IA no painel serão adicionadas em breve; as imagens abaixo cobrem o restante do painel e do Discord.
 
@@ -93,7 +105,7 @@ Painel customizável (título, cor, imagem, tipos e servidores) com botão **Abr
 
 ![Painel de abertura de tickets no Discord](.github/images/discord-ticket-panel.png)
 
-Dentro do canal do ticket: finalizar, assumir, sala de voz, manter aberto, tags e convites (`/ticketc`):
+Dentro do canal do ticket: finalizar, assumir, sala de voz, manter aberto, tags, convites (`/ticketc`) e assistente IA (`/ai`):
 
 ![Controles do ticket no Discord](.github/images/discord-ticket-controls.png)
 
@@ -110,11 +122,28 @@ Dentro do canal do ticket: finalizar, assumir, sala de voz, manter aberto, tags 
 | `/reputation negative` | Staff / Admin | Pontuação negativa no dono do ticket (motivo opcional) |
 | `/reputation view` | Staff / Admin | Perfil, comportamento e histórico de reputação do dono |
 | `/timer` | Staff / Admin | Prazo com contagem regressiva e alerta/menções automáticas |
+| `/language` | Dono\*\* / Staff / Admin | Define o idioma preferido dos conteúdos do ticket (`pt-BR` / `en-US` / `es-ES`) |
+| `/ai ticket` | Staff / Admin | Pausa (`off`) ou reativa (`on`) a IA **neste** ticket |
+| `/ai learn` | Staff / Admin | Ensina um conhecimento à base (pode ir para aprovação no painel) |
+| `/ai summary` | Staff / Admin | Resumo do ticket para a equipe (efêmero) |
+| `/ai suggest` | Staff / Admin | Rascunho de resposta para revisar (orientação opcional) |
+| `/ai reply` | Staff / Admin | IA redige a mensagem; staff confirma/edita antes de enviar (canal ou DM) |
+| `/ai tag` | Staff / Admin | Sugere tags e urgência para o ticket (efêmero) |
+| `/ai translate` | Staff / Admin | Traduz texto para pt-BR / en-US / es-ES (efêmero) |
+| `/ai voice` | Staff / Admin | Agente de voz: `join` / `leave` / `status` |
+| `/ai insights` | Staff / Admin | Relatório de desempenho da IA e lacunas da base |
+| `/ai status` | Admin† | Status do sistema de IA (provedor, chave, orçamento, etc.) |
+| `/ai toggle` | Admin† | Liga/desliga o sistema de IA no servidor |
+| `/ai reindex` | Admin† | Regenera vetores da busca semântica (gasta cota de embeddings) |
 
-\*O dono só convida se a opção estiver habilitada nas configurações. Além dos slash commands, os **botões** no canal cobrem assumir, voz, tags, manter aberto, etc. Relacionado (fora do canal do ticket): `/open` — Staff/Admin abre ticket em nome de outro usuário.
+\*O dono só convida se a opção estiver habilitada nas configurações.
+\*\*O dono só altera o próprio idioma se `allowTicketOwnerChangeLanguage` estiver ativo; staff/admin podem alterar o de outro usuário.
+†Permissão da feature `aiSystem` (admin ou cargos liberados no painel). Staff usa os subcomandos de trabalho sem ser admin da feature.
+
+Além dos slash commands, os **botões** no canal cobrem assumir, voz, tags, manter aberto, etc. Relacionado (fora do canal do ticket): `/open` — Staff/Admin abre ticket em nome de outro usuário. Configuração completa da IA: painel web → **Assistente IA**.
 
 Também há automação de inatividade (aviso, auto-close, reabertura com limite e botão **Manter Aberto**), lembretes de **horário de atendimento**, avaliações mútuas, transcripts HTML, blacklist, reputação e comportamento.
-Usuários que logarem no painel web podem ver o histórico de tickets abertos e fechados, avaliações, transcripts, etc, (conforme as configurações do bot que você definir). Cada membro pode escolher o **idioma preferido** no próprio ticket.
+Usuários que logarem no painel web podem ver o histórico de tickets abertos e fechados, avaliações, transcripts, etc, (conforme as configurações do bot que você definir). Cada membro pode escolher o **idioma preferido** no próprio ticket (`/language`).
 
 ### Tipos de ticket e cargos de staff
 
@@ -247,7 +276,7 @@ Também: exclusivo (um cargo por vez), limite por membro, cooldown e confirmaç�
 
 | Área                                      | Destaques                                                                                                                                           |
 | ----------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------- |
-| **IA / auto-atendimento**                 | Painel 2.0: base de conhecimento, memórias, aprendizado, provedores, mídia, tags automáticas; idioma preferido por usuário no ticket                |
+| **IA / auto-atendimento**                 | Painel 2.0 + `/ai` (ticket, learn, summary, suggest, reply, tag, translate, voice, insights, status/toggle/reindex); `AI_MASTER_KEY`; idioma via `/language` |
 | **Tickets**                               | Multi-servidor/tipo, cargos staff por tipo, tags com níveis Suporte/Gerente, tipos de jogo, horários de atendimento, campos, convites, voz, reabertura |
 | **Avaliações / transcripts / relatórios** | Avaliação mútua; reputação; HTML + ao vivo no painel; agendados ou sob demanda com export                                                           |
 | **Steam / API**                           | OAuth, cargo, webhook externo, API pública lookup/link/delete                                                                                       |

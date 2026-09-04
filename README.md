@@ -52,7 +52,7 @@ A Railway **não executa** o ficheiro `docker-compose.yml` como um único stack 
 | `DISCORD_CLIENT_SECRET` | Sim\*       | Client Secret OAuth2 (necessário para login no painel web).                                                                                                               |
 | `MONGO_URI`             | Sim         | URI de ligação ao MongoDB. Use **referência** ao serviço MongoDB (`${{Mongo.MONGO_URL}}` ou o nome que o template expuser — o dashboard mostra o nome exato da variável). |
 | `BASE_URL`              | Sim         | URL pública HTTPS do serviço (ex.: `https://<domínio>.up.railway.app`).                                                                                                   |
-| `AI_MASTER_KEY`         | Sim\*\*     | Master key AES para criptografar as chaves de API da IA no MongoDB. No **template Railway** é gerada automaticamente; em deploy manual / local defina você mesmo.       |
+| `AI_MASTER_KEY`         | Sim\*\*     | Master key AES para criptografar as chaves de API da IA no MongoDB. No **template Railway** é gerada automaticamente; em deploy manual / local defina você mesmo.         |
 | `PORT`                  | Recomendado | `8080` (deve coincidir com a porta exposta na **Networking**).                                                                                                            |
 | `NODE_ENV`              | Recomendado | `production`.                                                                                                                                                             |
 | `SERVER_HOSTNAME`       | Opcional    | Útil em alguns cenários (ex.: domínio público sem `https://`).                                                                                                            |
@@ -80,7 +80,7 @@ Em **Settings → Networking**, gere domínio e defina o tráfego HTTP para a po
 
 ## Recursos do Pro Ticket
 
-Bot Discord profissional de tickets com **painel web 2.0** embutido, multi-idioma (**pt-BR**, **en-US**, **es-ES**) e mais. A imagem alinhada a este repositório é a **3.4.0** (ver [VERSION](VERSION)).
+Bot Discord profissional de tickets com **painel web 2.0** embutido, multi-idioma (**pt-BR**, **en-US**, **es-ES**) e mais. A imagem alinhada a este repositório é a mais recente (ver [VERSION](VERSION)).
 
 Após configurar as variáveis e o bot estar **online** no Discord, use o comando **`/start`** para as configurações básicas iniciais (timezone, idioma, categoria de tickets, canal de transcrição, canal de anexos e cargo staff). Sem esse passo, o sistema de tickets ainda não fica pronto para uso.
 
@@ -97,7 +97,7 @@ Pré-requisito de ambiente: `AI_MASTER_KEY` (auto no template Railway; manual no
 - Assistência à staff: resumo, sugestão de resposta, redação com confirmação (`/ai summary` · `suggest` · `reply`)
 - Preferência de **idioma por usuário** nos tickets via `/language` (além do idioma padrão do servidor)
 
-> Capturas de ecrã da UI de IA no painel serão adicionadas em breve; as imagens abaixo cobrem o restante do painel e do Discord.
+> Capturas de tela da UI de IA no painel serão adicionadas em breve; as imagens abaixo cobrem o restante do painel e do Discord.
 
 ### No Discord — abertura e atendimento
 
@@ -111,30 +111,30 @@ Dentro do canal do ticket: finalizar, assumir, sala de voz, manter aberto, tags,
 
 #### Comandos dentro de um ticket aberto
 
-| Comando | Quem | Uso |
-| --- | --- | --- |
-| `/close` | Dono / Staff / Admin | Fecha o ticket atual (pode abrir fluxo de avaliação) |
-| `/finalize` | Staff / Admin | Posta mensagem de finalização; o usuário encerra ou continua |
-| `/ticketc invite` | Dono\* / Staff / Admin | Convida convidados (acesso ticket/voz/ambos, histórico, expiração) |
-| `/ticketc remove` | Dono / Staff / Admin | Remove convidados (todos ou específicos) |
-| `/ticketc list` | Dono / Staff / Admin | Lista convidados do ticket |
-| `/reputation positive` | Staff / Admin | Pontuação positiva no dono do ticket (motivo opcional) |
-| `/reputation negative` | Staff / Admin | Pontuação negativa no dono do ticket (motivo opcional) |
-| `/reputation view` | Staff / Admin | Perfil, comportamento e histórico de reputação do dono |
-| `/timer` | Staff / Admin | Prazo com contagem regressiva e alerta/menções automáticas |
-| `/language` | Dono\*\* / Staff / Admin | Define o idioma preferido dos conteúdos do ticket (`pt-BR` / `en-US` / `es-ES`) |
-| `/ai ticket` | Staff / Admin | Pausa (`off`) ou reativa (`on`) a IA **neste** ticket |
-| `/ai learn` | Staff / Admin | Ensina um conhecimento à base (pode ir para aprovação no painel) |
-| `/ai summary` | Staff / Admin | Resumo do ticket para a equipe (efêmero) |
-| `/ai suggest` | Staff / Admin | Rascunho de resposta para revisar (orientação opcional) |
-| `/ai reply` | Staff / Admin | IA redige a mensagem; staff confirma/edita antes de enviar (canal ou DM) |
-| `/ai tag` | Staff / Admin | Sugere tags e urgência para o ticket (efêmero) |
-| `/ai translate` | Staff / Admin | Traduz texto para pt-BR / en-US / es-ES (efêmero) |
-| `/ai voice` | Staff / Admin | Agente de voz: `join` / `leave` / `status` |
-| `/ai insights` | Staff / Admin | Relatório de desempenho da IA e lacunas da base |
-| `/ai status` | Admin† | Status do sistema de IA (provedor, chave, orçamento, etc.) |
-| `/ai toggle` | Admin† | Liga/desliga o sistema de IA no servidor |
-| `/ai reindex` | Admin† | Regenera vetores da busca semântica (gasta cota de embeddings) |
+| Comando                | Quem                     | Uso                                                                             |
+| ---------------------- | ------------------------ | ------------------------------------------------------------------------------- |
+| `/close`               | Dono / Staff / Admin     | Fecha o ticket atual (pode abrir fluxo de avaliação)                            |
+| `/finalize`            | Staff / Admin            | Posta mensagem de finalização; o usuário encerra ou continua                    |
+| `/ticketc invite`      | Dono\* / Staff / Admin   | Convida convidados (acesso ticket/voz/ambos, histórico, expiração)              |
+| `/ticketc remove`      | Dono / Staff / Admin     | Remove convidados (todos ou específicos)                                        |
+| `/ticketc list`        | Dono / Staff / Admin     | Lista convidados do ticket                                                      |
+| `/reputation positive` | Staff / Admin            | Pontuação positiva no dono do ticket (motivo opcional)                          |
+| `/reputation negative` | Staff / Admin            | Pontuação negativa no dono do ticket (motivo opcional)                          |
+| `/reputation view`     | Staff / Admin            | Perfil, comportamento e histórico de reputação do dono                          |
+| `/timer`               | Staff / Admin            | Prazo com contagem regressiva e alerta/menções automáticas                      |
+| `/language`            | Dono\*\* / Staff / Admin | Define o idioma preferido dos conteúdos do ticket (`pt-BR` / `en-US` / `es-ES`) |
+| `/ai ticket`           | Staff / Admin            | Pausa (`off`) ou reativa (`on`) a IA **neste** ticket                           |
+| `/ai learn`            | Staff / Admin            | Ensina um conhecimento à base (pode ir para aprovação no painel)                |
+| `/ai summary`          | Staff / Admin            | Resumo do ticket para a equipe (efêmero)                                        |
+| `/ai suggest`          | Staff / Admin            | Rascunho de resposta para revisar (orientação opcional)                         |
+| `/ai reply`            | Staff / Admin            | IA redige a mensagem; staff confirma/edita antes de enviar (canal ou DM)        |
+| `/ai tag`              | Staff / Admin            | Sugere tags e urgência para o ticket (efêmero)                                  |
+| `/ai translate`        | Staff / Admin            | Traduz texto para pt-BR / en-US / es-ES (efêmero)                               |
+| `/ai voice`            | Staff / Admin            | Agente de voz: `join` / `leave` / `status`                                      |
+| `/ai insights`         | Staff / Admin            | Relatório de desempenho da IA e lacunas da base                                 |
+| `/ai status`           | Admin†                   | Status do sistema de IA (provedor, chave, orçamento, etc.)                      |
+| `/ai toggle`           | Admin†                   | Liga/desliga o sistema de IA no servidor                                        |
+| `/ai reindex`          | Admin†                   | Regenera vetores da busca semântica (gasta cota de embeddings)                  |
 
 \*O dono só convida se a opção estiver habilitada nas configurações.
 \*\*O dono só altera o próprio idioma se `allowTicketOwnerChangeLanguage` estiver ativo; staff/admin podem alterar o de outro usuário.
@@ -274,15 +274,15 @@ Também: exclusivo (um cargo por vez), limite por membro, cooldown e confirmaç�
 
 ### Resumo por área
 
-| Área                                      | Destaques                                                                                                                                           |
-| ----------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Área                                      | Destaques                                                                                                                                                    |
+| ----------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------ |
 | **IA / auto-atendimento**                 | Painel 2.0 + `/ai` (ticket, learn, summary, suggest, reply, tag, translate, voice, insights, status/toggle/reindex); `AI_MASTER_KEY`; idioma via `/language` |
-| **Tickets**                               | Multi-servidor/tipo, cargos staff por tipo, tags com níveis Suporte/Gerente, tipos de jogo, horários de atendimento, campos, convites, voz, reabertura |
-| **Avaliações / transcripts / relatórios** | Avaliação mútua; reputação; HTML + ao vivo no painel; agendados ou sob demanda com export                                                           |
-| **Steam / API**                           | OAuth, cargo, webhook externo, API pública lookup/link/delete                                                                                       |
-| **Moderação**                             | Anti-flood, canal-isca (kick/timeout/ban), monitoramento de palavras-chave no chat                                                                  |
-| **Comunidade**                            | Mensagens sticky/agendadas/posts, comandos de texto custom, menções, menus de cargos, boas-vindas DM, auto voice                                    |
-| **Admin**                                 | Painel web completo, saúde/cache mais robustos, `/ticketadm`, `/configt`, snapshots/backup do servidor Discord                                      |
+| **Tickets**                               | Multi-servidor/tipo, cargos staff por tipo, tags com níveis Suporte/Gerente, tipos de jogo, horários de atendimento, campos, convites, voz, reabertura       |
+| **Avaliações / transcripts / relatórios** | Avaliação mútua; reputação; HTML + ao vivo no painel; agendados ou sob demanda com export                                                                    |
+| **Steam / API**                           | OAuth, cargo, webhook externo, API pública lookup/link/delete                                                                                                |
+| **Moderação**                             | Anti-flood, canal-isca (kick/timeout/ban), monitoramento de palavras-chave no chat                                                                           |
+| **Comunidade**                            | Mensagens sticky/agendadas/posts, comandos de texto custom, menções, menus de cargos, boas-vindas DM, auto voice                                             |
+| **Admin**                                 | Painel web completo, saúde/cache mais robustos, `/ticketadm`, `/configt`, snapshots/backup do servidor Discord                                               |
 
 Comandos e rotas detalhados: canal de documentação criado pelo bot após `/start`, ou a [página do template Railway](https://railway.com/deploy/discord-ticket).
 

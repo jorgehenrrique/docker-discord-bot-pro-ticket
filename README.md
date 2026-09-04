@@ -71,9 +71,21 @@ Em **Settings → Networking**, gere domínio e defina o tráfego HTTP para a po
 
 ## Recursos do Pro Ticket
 
-Bot Discord profissional de tickets com **painel web** embutido, multi-idioma (**pt-BR**, **en-US**, **es-ES**) e mais.
+Bot Discord profissional de tickets com **painel web 2.0** embutido, multi-idioma (**pt-BR**, **en-US**, **es-ES**) e mais. A imagem alinhada a este repositório é a **3.4.0** (ver [VERSION](VERSION)).
 
 Após configurar as variáveis e o bot estar **online** no Discord, use o comando **`/start`** para as configurações básicas iniciais (timezone, idioma, categoria de tickets, canal de transcrição, canal de anexos e cargo staff). Sem esse passo, o sistema de tickets ainda não fica pronto para uso.
+
+### IA e auto-atendimento (painel 2.0)
+
+Atendimento assistido por IA integrado ao fluxo de tickets e configurável no painel web:
+
+- **Base de conhecimento** e **memórias** por servidor — o bot responde com contexto do seu suporte
+- **Aprendizado** contínuo a partir de atendimentos e conteúdo que você aprova
+- **Provedores** de modelo configuráveis e tratamento de **mídia** (imagens/anexos) nas conversas
+- **Tags automáticas** sugeridas/aplicadas conforme o assunto do ticket
+- Preferência de **idioma por usuário** nos tickets (além do idioma padrão do servidor)
+
+> Capturas de ecrã da UI de IA no painel serão adicionadas em breve; as imagens abaixo cobrem o restante do painel e do Discord.
 
 ### No Discord — abertura e atendimento
 
@@ -101,8 +113,8 @@ Dentro do canal do ticket: finalizar, assumir, sala de voz, manter aberto, tags 
 
 \*O dono só convida se a opção estiver habilitada nas configurações. Além dos slash commands, os **botões** no canal cobrem assumir, voz, tags, manter aberto, etc. Relacionado (fora do canal do ticket): `/open` — Staff/Admin abre ticket em nome de outro usuário.
 
-Também há automação de inatividade (aviso, auto-close, reabertura com limite e botão **Manter Aberto**), avaliações mútuas, transcripts HTML, blacklist, reputação e comportamento.
-Usuários que logarem no painel web podem ver o histórico de tickets abertos e fechados, avaliações, transcripts, etc, (conforme as configurações do bot que você definir).
+Também há automação de inatividade (aviso, auto-close, reabertura com limite e botão **Manter Aberto**), lembretes de **horário de atendimento**, avaliações mútuas, transcripts HTML, blacklist, reputação e comportamento.
+Usuários que logarem no painel web podem ver o histórico de tickets abertos e fechados, avaliações, transcripts, etc, (conforme as configurações do bot que você definir). Cada membro pode escolher o **idioma preferido** no próprio ticket.
 
 ### Tipos de ticket e cargos de staff
 
@@ -110,6 +122,7 @@ Cada **tipo de ticket** (ex.: suporte geral, bug, obter bot) define:
 
 - **Cargos de suporte** obrigatórios — só quem tem esses cargos vê e atende aquele tipo
 - Categoria Discord opcional, limite por usuário, servidores de jogo associados
+- Lista de **tipos de jogo** para servidores de jogo (organização e contexto ao abrir o ticket)
 - Steam obrigatório, campos personalizados e anúncio contextual ao abrir
 
 ![Tipos de ticket no painel](.github/images/web-ticket-types.png)
@@ -165,7 +178,7 @@ OAuth Steam com cargo de verificado, auto-verificação ao entrar (se já houver
   - `DELETE …/link` — remover vínculo e tentar retirar o cargo
 - Integração com tickets (Steam no histórico, campo obrigatório se não vinculado)
 
-### Anti-flood e canal-isca (anti-spam)
+### Moderação: anti-flood, canal-isca e monitor de palavras
 
 **Anti-flood:** limite de mensagens, decay, timeout automático, isenções (admin, cargos, canais, tickets):
 
@@ -178,6 +191,8 @@ OAuth Steam com cargo de verificado, auto-verificação ao entrar (se já houver
 ![Configuração do canal anti-spam no painel](.github/images/web-anti-spam.png)
 
 Dica: coloque o canal-isca em “Canais isentos” do anti-flood para evitar punição dupla.
+
+**Monitoramento de palavras-chave no chat:** alertas e ações quando membros usam termos configurados (útil para abuso, phishing ou assuntos que devem ir para ticket).
 
 ### Quatro módulos de comunidade
 
@@ -232,12 +247,13 @@ Também: exclusivo (um cargo por vez), limite por membro, cooldown e confirmaç�
 
 | Área                                      | Destaques                                                                                                                                           |
 | ----------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------- |
-| **Tickets**                               | Multi-servidor/tipo, cargos staff por tipo, tags com troca de permissões, campos, anúncios, convites, voz, assumir/finalizar, reabertura, blacklist |
-| **Avaliações / transcripts / relatórios** | Avaliação mútua; HTML + ao vivo no painel; agendados ou sob demanda com export                                                                      |
+| **IA / auto-atendimento**                 | Painel 2.0: base de conhecimento, memórias, aprendizado, provedores, mídia, tags automáticas; idioma preferido por usuário no ticket                |
+| **Tickets**                               | Multi-servidor/tipo, cargos staff por tipo, tags com níveis Suporte/Gerente, tipos de jogo, horários de atendimento, campos, convites, voz, reabertura |
+| **Avaliações / transcripts / relatórios** | Avaliação mútua; reputação; HTML + ao vivo no painel; agendados ou sob demanda com export                                                           |
 | **Steam / API**                           | OAuth, cargo, webhook externo, API pública lookup/link/delete                                                                                       |
-| **Moderação**                             | Anti-flood + canal-isca (kick/timeout/ban)                                                                                                          |
-| **Comunidade**                            | Mensagens sticky/agendadas, comandos de texto, menções, menus de cargos, boas-vindas DM, auto voice                                                 |
-| **Admin**                                 | Painel web completo, `/ticketadm`, `/configt`, snapshots/backup Discord                                                                             |
+| **Moderação**                             | Anti-flood, canal-isca (kick/timeout/ban), monitoramento de palavras-chave no chat                                                                  |
+| **Comunidade**                            | Mensagens sticky/agendadas/posts, comandos de texto custom, menções, menus de cargos, boas-vindas DM, auto voice                                    |
+| **Admin**                                 | Painel web completo, saúde/cache mais robustos, `/ticketadm`, `/configt`, snapshots/backup do servidor Discord                                      |
 
 Comandos e rotas detalhados: canal de documentação criado pelo bot após `/start`, ou a [página do template Railway](https://railway.com/deploy/discord-ticket).
 

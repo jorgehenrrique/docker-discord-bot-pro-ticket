@@ -86,9 +86,25 @@ Após configurar as variáveis e o bot estar **online** no Discord, use o comand
 
 ### IA e auto-atendimento (painel 2.0)
 
-Atendimento assistido por IA integrado ao fluxo de tickets. A configuração completa (provedor, chave de API, base de conhecimento, voz, orçamento, etc.) fica no painel web (**Assistente IA**); no Discord use `/ai` para controles rápidos no ticket.
+Atendimento assistido por IA integrado ao fluxo de tickets. A configuração completa (provedor, chave de API, base de conhecimento, voz, operação, etc.) fica no painel web (**Assistente IA**); no Discord use `/ai` para controles rápidos no ticket.
 
-Pré-requisito de ambiente: `AI_MASTER_KEY` (auto no template Railway; manual no local — ver variáveis acima).
+Pré-requisito de ambiente: `AI_MASTER_KEY` (auto no template Railway; manual no local — ver variáveis acima). Tudo é **opcional**: com o sistema desligado, o bot funciona como antes.
+
+![Assistente IA desativado](.github/images/web-ai-off.png)
+
+![Assistente IA ativo — configurações e gatilhos](.github/images/web-ai-config.png)
+
+![Provider, modelo e chave de API](.github/images/web-ai-model.png)
+
+![Capacidades e ferramentas da IA](.github/images/web-ai-capabilities.png)
+
+![Base de conhecimento, memórias e fontes](.github/images/web-ai-knowledge.png)
+
+![Agente de voz (STT/TTS)](.github/images/web-ai-voice.png)
+
+![Operação — insights, tokens e auditoria](.github/images/web-ai-ops.png)
+
+![Playground — testar sem enviar ao Discord](.github/images/web-ai-playground.png)
 
 - **Base de conhecimento** e **memórias** por servidor — o bot responde com contexto do seu suporte
 - **Aprendizado** contínuo a partir de atendimentos e conteúdo que você aprova (`/ai learn` ou reação no canal)
@@ -96,8 +112,6 @@ Pré-requisito de ambiente: `AI_MASTER_KEY` (auto no template Railway; manual no
 - **Tags automáticas** sugeridas/aplicadas conforme o assunto do ticket (`/ai tag`)
 - Assistência à staff: resumo, sugestão de resposta, redação com confirmação (`/ai summary` · `suggest` · `reply`)
 - Preferência de **idioma por usuário** nos tickets via `/language` (além do idioma padrão do servidor)
-
-> Capturas de tela da UI de IA no painel serão adicionadas em breve; as imagens abaixo cobrem o restante do painel e do Discord.
 
 ### No Discord — abertura e atendimento
 

@@ -184,9 +184,22 @@ Tags categorizam o ticket e podem **trocar quem tem acesso** ao canal (texto e v
 - Menções de cargos em spoiler para chamar equipes sem spam
 - Tags de sistema (`Primeiro Ticket`, `Reaberto`, `Aberto por Admin`, `Fechado Automaticamente`) + tags custom
 
+### Inbox de Tickets — atendimento direto pelo navegador
+
+Abra, acompanhe e **responda tickets pelo painel web**, sem precisar abrir o Discord. Tudo sincroniza em tempo real com o canal do ticket: mensagens, edições, exclusões, mensagens fixadas e o aviso de "digitando".
+
+- **Conversas com filtros:** busca, servidor, tipo, status, "só os meus", tickets fixados no topo e modos de atividade (sem resposta, aguardando cliente, sem atividade, mais antigos)
+- **Responder pelo painel:** menções com autocompletar, emojis do Discord, anexos com visualização de imagens, mensagens fixadas e aviso sonoro de novas mensagens
+- **Correção com IA:** botão para corrigir ortografia e gramática antes de enviar
+- **Tradução automática (IA):** quando o dono do ticket usa outro idioma, a staff escreve no idioma do bot e o dono recebe no idioma dele (só a tradução ou original e tradução)
+- **Ações da staff:** aplicar tags, mudar categoria, finalizar e usar comandos (IA, convites, idioma, membro, reputação, timer, `/ticketadm`) sem sair da conversa, com atalhos e macros fixados abaixo do campo de mensagem
+- **Perfil do membro:** Steam ID, histórico de tickets com transcripts, reputação, análise de comportamento e blacklist
+- **Abrir ticket pelo painel:** o membro abre o próprio ticket, e a staff pode abrir em nome de outro usuário buscando pelo nome ou colando o SteamID64
+- Permissão **Inbox de Tickets** para definir quem da staff acessa a visão completa; o painel avisa quando há uma nova versão e pede para recarregar a página
+
 ### Painel web — operação e analytics
 
-Dashboard do proprietário com estatísticas e lista de tickets abertos em tempo quase real:
+Dashboard do proprietário com estatísticas em tempo quase real (os tickets abertos ficam na **Inbox de Tickets**):
 
 ![Dashboard do painel web](.github/images/web-dashboard.png)
 
@@ -296,6 +309,7 @@ Também: exclusivo (um cargo por vez), limite por membro, cooldown e confirmaç�
 | **Steam / API**                           | OAuth, cargo, webhook externo, API pública lookup/link/delete                                                                                                |
 | **Moderação**                             | Anti-flood, canal-isca (kick/timeout/ban), monitoramento de palavras-chave no chat                                                                           |
 | **Comunidade**                            | Mensagens sticky/agendadas/posts, comandos de texto custom, menções, menus de cargos, boas-vindas DM, auto voice                                             |
+| **Inbox de Tickets**                      | Responder tickets pelo navegador em tempo real, tradução e correção com IA, tags, comandos, perfil do membro            |
 | **Admin**                                 | Painel web completo, saúde/cache mais robustos, `/ticketadm`, `/configt`, snapshots/backup do servidor Discord                                               |
 
 Comandos e rotas detalhados: canal de documentação criado pelo bot após `/start`, ou a [página do template Railway](https://railway.com/deploy/discord-ticket).

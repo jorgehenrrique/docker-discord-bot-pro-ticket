@@ -188,7 +188,7 @@ Tags categorizam o ticket e podem **trocar quem tem acesso** ao canal (texto e v
 
 Abra, acompanhe e **responda tickets pelo painel web**, sem precisar abrir o Discord. Tudo sincroniza em tempo real com o canal do ticket: mensagens, edições, exclusões, mensagens fixadas e o aviso de "digitando".
 
-- **Conversas com filtros:** busca, servidor, tipo, status, "só os meus", tickets fixados no topo e modos de atividade (sem resposta, aguardando cliente, sem atividade, mais antigos)
+- **Conversas com filtros:** busca, servidor, tipo, status, "só os meus", tickets fixados no topo e modos de atividade (sem resposta, aguardando cliente, sem atividade, mais antigos), agora num painel mais compacto, com chips dos filtros ativos
 - **Responder pelo painel:** menções com autocompletar, emojis do Discord, anexos com visualização de imagens, mensagens fixadas e aviso sonoro de novas mensagens
 - **Correção com IA:** botão para corrigir ortografia e gramática antes de enviar
 - **Tradução automática (IA):** quando o dono do ticket usa outro idioma, a staff escreve no idioma do bot e o dono recebe no idioma dele (só a tradução ou original e tradução)
@@ -196,6 +196,7 @@ Abra, acompanhe e **responda tickets pelo painel web**, sem precisar abrir o Dis
 - **Perfil do membro:** Steam ID, histórico de tickets com transcripts, reputação, análise de comportamento e blacklist
 - **Abrir ticket pelo painel:** o membro abre o próprio ticket, e a staff pode abrir em nome de outro usuário buscando pelo nome ou colando o SteamID64
 - Permissão **Inbox de Tickets** para definir quem da staff acessa a visão completa; o painel avisa quando há uma nova versão e pede para recarregar a página
+- **Temas da inbox:** nas preferências, dá para escolher a aparência só dessa tela (Pro Ticket, DayZ ou GTA VI), sem alterar o resto do painel
 
 ### Painel web — operação e analytics
 
@@ -214,6 +215,8 @@ Transcript ao vivo do ticket pelo navegador:
 ### Chat da Equipe e chamadas (painel)
 
 Na inbox (**Tickets**), a aba **Equipe** é um chat nativo entre staff (DMs e grupos) — sem Discord. Precisa da feature `teamChat` liberada em Sistema → Permissões.
+
+A staff troca mensagens com anexos, respostas, reações e mensagens fixadas; dá para chamar a atenção dos colegas (zumbido) e o painel avisa mesmo fora da inbox.
 
 **Chamadas de voz/vídeo (opcional):** SFU **LiveKit externo** (Cloud ou self-host). A mídia **não** passa pelo container do bot. Em Settings → Chat da Equipe → Chamadas: URL `wss://…` + API Key + API Secret (`AI_MASTER_KEY` cifra os segredos).
 
@@ -320,7 +323,7 @@ Também: exclusivo (um cargo por vez), limite por membro, cooldown e confirmaç�
 | **Steam / API**                           | OAuth, cargo, webhook externo, API pública lookup/link/delete                                                                                                |
 | **Moderação**                             | Anti-flood, canal-isca (kick/timeout/ban), monitoramento de palavras-chave no chat                                                                           |
 | **Comunidade**                            | Mensagens sticky/agendadas/posts, comandos de texto custom, menções, menus de cargos, boas-vindas DM, auto voice                                             |
-| **Inbox de Tickets**                      | Responder tickets pelo navegador em tempo real, tradução e correção com IA, tags, comandos, perfil do membro            |
+| **Inbox de Tickets**                      | Responder tickets pelo navegador em tempo real, tradução e correção com IA, tags, comandos, perfil do membro, temas (Pro Ticket, DayZ, GTA VI), filtros compactos |
 | **Admin**                                 | Painel web completo, saúde/cache mais robustos, `/ticketadm`, `/configt`, snapshots/backup do servidor Discord                                               |
 
 Comandos e rotas detalhados: canal de documentação criado pelo bot após `/start`, ou a [página do template Railway](https://railway.com/deploy/discord-ticket).

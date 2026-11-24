@@ -52,7 +52,7 @@ A Railway **não executa** o ficheiro `docker-compose.yml` como um único stack 
 | `DISCORD_CLIENT_SECRET` | Sim\*       | Client Secret OAuth2 (necessário para login no painel web).                                                                                                               |
 | `MONGO_URI`             | Sim         | URI de ligação ao MongoDB. Use **referência** ao serviço MongoDB (`${{Mongo.MONGO_URL}}` ou o nome que o template expuser — o dashboard mostra o nome exato da variável). |
 | `BASE_URL`              | Sim         | URL pública HTTPS do serviço (ex.: `https://<domínio>.up.railway.app`).                                                                                                   |
-| `AI_MASTER_KEY`         | Sim\*\*     | Master key AES para criptografar as chaves de API da IA no MongoDB. No **template Railway** é gerada automaticamente; em deploy manual / local defina você mesmo.         |
+| `AI_MASTER_KEY`         | Sim\*\*     | Master key AES para criptografar segredos do painel no MongoDB (chaves de API da IA **e** credenciais LiveKit das chamadas). No **template Railway** é gerada automaticamente; em deploy manual / local defina você mesmo. |
 | `PORT`                  | Recomendado | `8080` (deve coincidir com a porta exposta na **Networking**).                                                                                                            |
 | `NODE_ENV`              | Recomendado | `production`.                                                                                                                                                             |
 | `SERVER_HOSTNAME`       | Opcional    | Útil em alguns cenários (ex.: domínio público sem `https://`).                                                                                                            |
@@ -66,7 +66,7 @@ A Railway **não executa** o ficheiro `docker-compose.yml` como um único stack 
 AI_MASTER_KEY="${{ secret(32, \"abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ\") }}"
 ```
 
-No docker compose local (ou serviço Railway sem template), coloque uma string secreta estável no `.env`. **Não troque** a key depois de cadastrar chaves de API no painel: a decriptação falha e será preciso recadastrá-las. Sem esta env, o painel de IA não consegue guardar/usar chaves de provedor.
+No docker compose local (ou serviço Railway sem template), coloque uma string secreta estável no `.env`. **Não troque** a key depois de cadastrar chaves de API da IA ou credenciais LiveKit no painel: a decriptação falha e será preciso recadastrá-las. Sem esta env, o painel não consegue guardar/usar esses segredos.
 
 ### OAuth2 — redirect do painel
 
@@ -211,6 +211,16 @@ Transcript ao vivo do ticket pelo navegador:
 
 ![Transcript ao vivo no painel](.github/images/web-live-transcript.png)
 
+### Chat da Equipe e chamadas (painel)
+
+Na inbox (**Tickets**), a aba **Equipe** é um chat nativo entre staff (DMs e grupos) — sem Discord. Precisa da feature `teamChat` liberada em Sistema → Permissões.
+
+**Chamadas de voz/vídeo (opcional):** SFU **LiveKit externo** (Cloud ou self-host). A mídia **não** passa pelo container do bot. Em Settings → Chat da Equipe → Chamadas: URL `wss://…` + API Key + API Secret (`AI_MASTER_KEY` cifra os segredos).
+
+- Cloud: [cloud.livekit.io](https://cloud.livekit.io) → Settings → Keys  
+- Self-host one-click: [template Railway LiveKit](https://railway.com/deploy/livekit-midiawebrtcrealtime?referralCode=gandalf&utm_medium=integration&utm_source=template&utm_campaign=generic) · [GitHub docker-livekit](https://github.com/jorgehenrrique/docker-livekit)  
+  Gere as duas keys com `generate-keys` **antes** de fazer o Deploy do template.
+
 Visão geral, preview do painel, toggles de funcionalidades e organização da estrutura Discord:
 
 ![Visão geral das configurações](.github/images/web-settings.png)
@@ -304,6 +314,7 @@ Também: exclusivo (um cargo por vez), limite por membro, cooldown e confirmaç�
 | Área                                      | Destaques                                                                                                                                                    |
 | ----------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------ |
 | **IA / auto-atendimento**                 | Painel 2.0 + `/ai` (ticket, learn, summary, suggest, reply, tag, translate, voice, insights, status/toggle/reindex); `AI_MASTER_KEY`; idioma via `/language` |
+| **Chat da Equipe**                        | Inbox aba Equipe (DMs/grupos staff); chamadas A/V opcionais via LiveKit externo (Cloud ou [template Railway](https://railway.com/deploy/livekit-midiawebrtcrealtime?referralCode=gandalf&utm_medium=integration&utm_source=template&utm_campaign=generic) / [GitHub](https://github.com/jorgehenrrique/docker-livekit)); feature `teamChat` |
 | **Tickets**                               | Multi-servidor/tipo, cargos staff por tipo, tags com níveis Suporte/Gerente, tipos de jogo, horários de atendimento, campos, convites, voz, reabertura       |
 | **Avaliações / transcripts / relatórios** | Avaliação mútua; reputação; HTML + ao vivo no painel; agendados ou sob demanda com export                                                                    |
 | **Steam / API**                           | OAuth, cargo, webhook externo, API pública lookup/link/delete                                                                                                |
